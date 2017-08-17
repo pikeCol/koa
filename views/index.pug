@@ -3,3 +3,10 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  form(action='/api/user/signIn.json' method='post')
+    p name
+      input(type="text" name="name")
+    p password
+      input(type="text" name="password")
+    p
+      input(type="submit")
