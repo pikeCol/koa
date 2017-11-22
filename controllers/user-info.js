@@ -1,5 +1,10 @@
-// const userInfoService = require('./../services/user-info')
-const userCode = require('../codes/user')
+const userInfoService = require('../services/user-info')
+// const userCode = require('../codes/user')
+const utils = require('utility')
+function pwdMd5(pwd) {
+  let salt = 'oe1@)123!NLNKH/?;1;1__2_(@4)' + pwd
+  return utils.md5(utils.md5(salt))
+}
 
 module.exports = {
 
@@ -11,99 +16,88 @@ module.exports = {
     let formData = ctx.request.body
     let result = {
       success: false,
-      message: '',
-      data: null,
-      code: ''
+      msg: '',
+      data: {
+        type:'',
+        avatar:'',
+        username:''
+      },
+      code: '',
+      status:''
     }
-
-    console.log(formData)
-
-    if (formData.name=="22") {
-      ctx.redirect('/success')
+    formData.password = pwdMd5(formData.password)
+    let userResult = await userInfoService.signIn( formData )
+    console.log(userResult)
+    if ( userResult ) {
+      if ( formData.username === userResult.username ) {
+        result.success = true
+        result.data.avatar = userResult.avatar
+        result.data.type = userResult.type
+        result.data.username = userResult.username
+      }
     } else {
-      ctx.body=result
+      result.status = 404
+      result.msg="用户名或密码错误！"
+      ctx.body = result
     }
 
-    // let userResult = await userInfoService.signIn( formData )
-    //
-    // if ( userResult ) {
-    //   if ( formData.userName === userResult.name ) {
-    //     result.success = true
-    //   } else {
-    //     result.message = userCode.FAIL_USER_NAME_OR_PASSWORD_ERROR
-    //     result.code = 'FAIL_USER_NAME_OR_PASSWORD_ERROR'
-    //   }
-    // } else {
-    //   result.code = 'FAIL_USER_NO_EXIST',
-    //   result.message = userCode.FAIL_USER_NO_EXIST
-    // }
-
-    // if ( formData.source === 'form' && result.success === true ) {
-    //   let session = ctx.session
-    //   session.isLogin = true
-    //   session.userName = userResult.name
-    //   session.userId = userResult.id
-    //
-    //   ctx.redirect('/work')
-    // } else {
-    //   ctx.body = result
-    // }
+    if ( result.success === true ) {
+      let session = ctx.session
+      session.isAuth = true
+      session.username = userResult.username
+      session.type = userResult.type
+      session.id = userResult.id
+      result.status = 200
+      ctx.body = result
+    }
+    return
   },
 
   /**
    * 注册操作
    * @param   {obejct} ctx 上下文对象
    */
-  async signUp( ctx ) {
+  async register( ctx ) {
     let formData = ctx.request.body
+    const {password,...data} = formData
+    console.log(formData)
     let result = {
       success: false,
-      message: '',
-      data: null
+      msg: '',
+      data: null,
+      status:''
     }
-
-    let validateResult = userInfoService.validatorSignUp( formData )
-
-    if ( validateResult.success === false ) {
-      result = validateResult
+    formData.password = pwdMd5(formData.password)
+    let existOne  = await userInfoService.getExistOne(formData)
+    if ( existOne  ) {
+      result.msg = '用户名已经存在'
+      result.status = 404
+      result.success = false
       ctx.body = result
       return
     }
 
-    let existOne  = await userInfoService.getExistOne(formData)
-    console.log( existOne )
-
-    if ( existOne  ) {
-      if ( existOne .name === formData.userName ) {
-        result.message = userCode.FAIL_USER_NAME_IS_EXIST
-        ctx.body = result
-        return
-      }
-      if ( existOne .email === formData.email ) {
-        result.message = userCode.FAIL_EMAIL_IS_EXIST
-        ctx.body = result
-        return
-      }
-    }
-
-
     let userResult = await userInfoService.create({
-      email: formData.email,
       password: formData.password,
-      name: formData.userName,
-      create_time: new Date().getTime(),
-      level: 1,
+      username: formData.username,
+      type: formData.type,
+      // create_time:t
     })
-
     console.log( userResult )
 
     if ( userResult && userResult.insertId * 1 > 0) {
+      result.status = 200
       result.success = true
+      ctx.session.id = userResult.insertId
+      ctx.session.isAuth = true
     } else {
-      result.message = userCode.ERROR_SYS
+      result.msg = 'error'
     }
-
+    console.log('我是session',ctx.session)
+    result.data = data
+    result.data.avatar = null
     ctx.body = result
+    return
   },
 
   /**
@@ -113,22 +107,20 @@ module.exports = {
   async getLoginUserInfo( ctx ) {
     let session = ctx.session
     let isLogin = session.isLogin
-    let userName = session.userName
-
-    console.log( 'session=', session )
+    let username = session.username
 
     let result = {
       success: false,
-      message: '',
+      msg: '',
       data: null,
     }
-    if ( isLogin === true && userName ) {
-      let userInfo = await userInfoService.getUserInfoByUserName( userName )
+    if ( isLogin === true && username ) {
+      let userInfo = await userInfoService.getUserInfoByUserName( username )
       if ( userInfo ) {
         result.data = userInfo
         result.success = true
       } else {
-        result.message = userCode.FAIL_USER_NO_LOGIN
+        result.msg = `FAIL_USER_NO_LOGIN`
       }
     } else {
       // TODO
@@ -136,7 +128,31 @@ module.exports = {
 
     ctx.body = result
   },
-
+  async update( ctx ) {
+    let data = ctx.request.body
+    let result = {
+      success:false,
+      status:'',
+      msg:''
+    }
+    let session = ctx.session
+    console.log(session)
+    if (session.isAuth && session.id) {
+      let resultData = await userInfoService.updateById(session.id,data)
+      console.log(resultData)
+      if (resultData.avatar == data.avatar) {
+        result.success=true
+        result.status=200
+        ctx.body = result
+        return
+      }
+    }
+    result.success=false,
+    result.msg='登录过期'
+    result.status=404
+    ctx.body = result
+    return
+  },
   /**
    * 校验用户是否登录
    * @param  {obejct} ctx 上下文对象
@@ -144,17 +160,33 @@ module.exports = {
   validateLogin( ctx ) {
     let result = {
       success: false,
-      message: userCode.FAIL_USER_NO_LOGIN,
+      msg: `userCode.FAIL_USER_NO_LOGIN`,
       data: null,
       code: 'FAIL_USER_NO_LOGIN',
     }
     let session = ctx.session
-    if( session && session.isLogin === true  ) {
+    if( session && session.isAuth === true  ) {
       result.success = true
-      result.message = ''
+      result.msg = ''
       result.code = ''
     }
     return result
+  },
+  /**
+   * 获取用户信息
+   * @param    {obejct} ctx 上下文对象
+   */
+  async getUserList ( ctx ) {
+    let result = {
+      success: false,
+      msg: '',
+      data: null,
+    }
+    let data = await userInfoService.getAllUser();
+    console.log('my data',data)
+    result.data = data
+    result.success=true
+    ctx.body = result
   }
 
 

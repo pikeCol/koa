@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./include/head.html %>
+</head>
+<body>
+  <div class="zy">
+    <!-- 头部 -->
+    <div class="bg2">
+      <div class="navs">
+        <ul>
+          <li class="wow fadeInDown about choose" data-wow-duration="2s">
+            <a href="./index.html" class="parent choose">
+              <span>关于浙银</span>
+              <span class="line wow" style="display: block;"></span>
+            </a>
+            <div class="submenu">
+               <span><a href="./intruduce.html">集团简介</a></span>
+              <span><a href="./cultrue.html">企业文化</a></span>
+              <span><a href="./society.html">社会责任</a></span>
+              <span><a href="./honor.html">企业荣誉</a></span>
+            </div>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./industry.html" >
+              <span>集团产业</span>
+              <span class="line wow" ></span>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./group.html">
+              <span>集团成员</span>
+              <span class="line wow"></span>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./index.html">
+              <span class="icon-logo logo"></span>
+              <p>浙银资产</p>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./news.html">
+              <span>新闻中心</span>
+              <span class="line wow"></span>
+            </a>
+          </li>
+         <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./cooperation.html">
+              <span>战略合作</span>
+              <span class="line wow"></span>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./touchUs.html">
+              <span>联系我们</span>
+              <span class="line wow"></span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    <!-- 内容 -->
+    <div class="content">
+      <div class="typepage clear">
+        <div class="location">
+           <div class="leftbar">
+              <a class="subchoose positions">定位</a>
+              <a class="survey">概况</a>
+            </div>
+            <div class="rightContent">
+              <div class="desc1">
+                <p> 北京浙银控股集团有限公司（筹）由在京浙商联合投资设立，注册资金人民币一亿元，集聚了浙江、上海、北京等地金融、资本、产业力量与资源，是一家多元化民营投资控股集团，总部位于中国北京。</p>
+                <p>浙银控股致力于践行国家产业发展战略，坚持全球化视野，构建“产业+金融”运营模式，以实体产业夯实公司资产，以金融手段完善区域性产业链，助力产业上下游中小微企业发展，推动整个产业经济转型升级。</p>
+              </div>
+              <div class="desc2">
+                <p>浙银控股创始团队，2010年初在北京开始涉足股权投资领域，关注于基于互联网技术的新兴产业投资，先后投资了50多家企业，总投资额20多亿，现在大部分被投企业发展良好，中商惠民等多被投家企业已经进入上市准备阶段。</p>
+                <p>浙银控股团队近年专注基于供应链技术的产融结合，主要涉足供应链互金平台、互联网保险平台、理财师执业平台、供应链技术平台、资产投资管理平台等五大领域，拥有互联网小贷、融资租赁、保理、典当、担保、保险经纪、保险代理、私募管理人等综合金融资质，目前还在申请基金销售、AMC等金融牌照。</p>
+              </div>
+
+            </div>
+        </div>
+
+      </div>
+    </div>
+
+    <% include ./include/footer.html %>
+  </div>
+
+  <script src="./js/wow.js"></script>
+  <script src="./js/base.js"></script>
+<script>
+
+    $('.positions').click(function(){
+      $(this).addClass('subchoose').siblings().removeClass('subchoose')
+      $('.desc1').show()
+      $('.desc2').hide()
+    })
+    $('.survey').click(function(){
+      $(this).addClass('subchoose').siblings().removeClass('subchoose')
+      $('.desc2').show()
+      $('.desc1').hide()
+    })
+
+
+
+
+
+</script>
+</body>
+</html>

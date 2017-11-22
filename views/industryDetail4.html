@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./include/head.html %>
+</head>
+<body>
+  <div class="zy">
+    <!-- 头部 -->
+    <div class="bg2">
+      <div class="navs">
+        <ul>
+          <li class="wow fadeInDown about choose" data-wow-duration="2s">
+            <a href="./index.html" class="parent">
+              <span>关于浙银</span>
+              <span class="line wow" ></span>
+            </a>
+            <div class="submenu">
+              <span><a href="./intruduce.html">集团简介</a></span>
+              <span><a href="./cultrue.html">企业文化</a></span>
+              <span><a href="./society.html">社会责任</a></span>
+              <span><a href="./honor.html">企业荣誉</a></span>
+            </div>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./industry.html" class="choose">
+              <span>集团产业</span>
+              <span class="line wow" style="display: block;"></span>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./group.html">
+              <span>集团成员</span>
+              <span class="line wow"></span>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./index.html">
+              <span class="icon-logo logo"></span>
+              <p>浙银资产</p>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./news.html" >
+              <span>新闻中心</span>
+              <span class="line wow" ></span>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./cooperation.html">
+              <span>战略合作</span>
+              <span class="line wow"></span>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./touchUs.html">
+              <span>联系我们</span>
+              <span class="line wow"></span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    <!-- 内容 -->
+    <div class="content clear">
+      <div class="detailtitle">
+        <span class="mytitle mytitle_hock mychoose" style="margin-right:0 ">供应链金融</span>
+      </div>
+      <div class="artile">
+        <p>
+          供应链金融，简单地说，就是银行将核心企业和上下游企业联系在一起提供灵活运用的金融产品和服务的一种融资模式。即把资金作为供应链的一个溶剂，增加其流动性。“供应链金融”最大的特点就是在供应链中寻找出一个大的核心企业，以核心企业为出发点，为供应链提供金融支持。一方面，将资金有效注入处于相对弱势的上下游配套中小企业，解决中小企业融资难和供应链失衡的问题；另一方面，将银行信用融入上下游企业的购销行为，增强其商业信用，促进中小企业与核心企业建立长期战略协同关系，提升供应链的竞争能力。
+        </p>
+
+         <p>
+          在供应链金融领域，浙银集团涉及以下行业：<br />
+          1、砂石骨料供应链金融<br />
+          2、钢贸供应链金融<br />
+          3、水泥行业供应链金融<br />
+          4、跨境贸易供应链金融
+        </p>
+        <!-- <p>
+          <span class="titlesl"> 三、浙银集团参与的新疆农林产业</span>
+        </p> -->
+      </div>
+    </div>
+    <% include ./include/footer.html %>
+
+  </div>
+
+  <script src="./js/wow.js"></script>
+  <script src="./js/base.js"></script>
+<script>
+   $('.mytitle_hock').click(function(){
+      $(this).addClass('mychoose').siblings().removeClass('mychoose')
+      $('.artile').show()
+      $('.artile2').hide()
+    })
+    $('.mytitle_hock2').click(function(){
+      $(this).addClass('mychoose').siblings().removeClass('mychoose')
+      $('.artile2').show()
+      $('.artile').hide()
+    })
+
+
+</script>
+</body>
+</html>

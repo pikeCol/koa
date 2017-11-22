@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./include/head.html %>
+</head>
+<body>
+  <div class="zy">
+    <!-- 头部 -->
+    <div class="bg2">
+      <div class="navs">
+        <ul>
+          <li class="wow fadeInDown about choose" data-wow-duration="2s">
+            <a href="./index.html" class="parent">
+              <span>关于浙银</span>
+              <span class="line wow" ></span>
+            </a>
+            <div class="submenu">
+              <span><a href="./intruduce.html">集团简介</a></span>
+              <span><a href="./cultrue.html">企业文化</a></span>
+              <span><a href="./society.html">社会责任</a></span>
+              <span><a href="./honor.html">企业荣誉</a></span>
+            </div>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./industry.html" class="choose">
+              <span>集团产业</span>
+              <span class="line wow" style="display: block;"></span>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./group.html">
+              <span>集团成员</span>
+              <span class="line wow"></span>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./index.html">
+              <span class="icon-logo logo"></span>
+              <p>浙银资产</p>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./news.html" >
+              <span>新闻中心</span>
+              <span class="line wow" ></span>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./cooperation.html">
+              <span>战略合作</span>
+              <span class="line wow"></span>
+            </a>
+          </li>
+          <li class="wow fadeInDown" data-wow-duration="2s">
+            <a href="./touchUs.html">
+              <span>联系我们</span>
+              <span class="line wow"></span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    <!-- 内容 -->
+    <div class="content clear">
+      <div class="detailtitle">
+        <span class="mytitle mytitle_hock mychoose" style="margin-right:0 ">股权投资</span>
+      </div>
+      <div class="artile">
+        <p>
+          浙银集团主要以矿业产业基金和矿业股权投资两个方面实现股权投资，并且从上游注资到下游销售，浙银集团都能在产业链方面给予全方位支持，灵活的避免了“投资人变股东，股东变义工”的尴尬情况。
+      在矿业产业方面，浙银集团有着丰富的经验和资源，并在多个矿产领域部署矿业投资，主要涉及的产业有有色金属、绿色矿山，砂石、油气能源等。并拥有丰富的矿山资源。
+      浙银集团的矿业产业基金和矿业股权投资相结合，以供应链金融为支撑，一方面为矿业企业注入资金血脉，一方面受益投资人。并且结合供应链优势，实现产销一体，让资金流通价值最大化，货物流通压力最小化，渠道优势十分明显。
+        </p>
+        <div class="contentImg clear">
+          <div class="left">
+            <img src="./img/build1.png" alt="">
+          </div>
+          <div class="right">
+            <img src="./img/build2.png" alt="">
+          </div>
+        </div>
+        <!-- <p>
+          <span class="titlesl"> 三、浙银集团参与的新疆农林产业</span>
+        </p> -->
+      </div>
+    </div>
+    <% include ./include/footer.html %>
+
+  </div>
+
+  <script src="./js/wow.js"></script>
+  <script src="./js/base.js"></script>
+<script>
+   $('.mytitle_hock').click(function(){
+      $(this).addClass('mychoose').siblings().removeClass('mychoose')
+      $('.artile').show()
+      $('.artile2').hide()
+    })
+    $('.mytitle_hock2').click(function(){
+      $(this).addClass('mychoose').siblings().removeClass('mychoose')
+      $('.artile2').show()
+      $('.artile').hide()
+    })
+
+
+</script>
+</body>
+</html>

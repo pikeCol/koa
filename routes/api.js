@@ -3,8 +3,10 @@ const userInfoController = require('./../controllers/user-info')
 
 const routers = router
   .get('/user/getUserInfo.json', userInfoController.getLoginUserInfo)
-  .post('/user/signIn.json', userInfoController.signIn)
-  .post('/user/signUp.json', userInfoController.signUp)
+  .get('/user/list', userInfoController.getUserList)
+  .post('/user/register', userInfoController.register)
+  .post('/user/login', userInfoController.signIn)
+  .post('/user/update', userInfoController.update)
 
 
 module.exports = routers
