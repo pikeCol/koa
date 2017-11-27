@@ -35,9 +35,14 @@ const user = {
   },
   async updateById(id,data) {
     let _sql =`
-      UPDATE user SET avatar="${data.avatar}" WHERE id="${id}";
+      UPDATE user SET avatar="${data.avatar}", description="${data.desc}", company="${data.company}",title="${data.title}"  WHERE id="${id}";
     `
     let result = await dbUtils.query( _sql )
+    if ( Array.isArray(result) && result.length > 0 ) {
+      result = result[0]
+    } else {
+      result = null
+    }
     return result
   },
   /**

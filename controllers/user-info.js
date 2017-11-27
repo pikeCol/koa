@@ -90,6 +90,7 @@ module.exports = {
       result.success = true
       ctx.session.id = userResult.insertId
       ctx.session.isAuth = true
+      ctx.session.type = formData.type
     } else {
       result.msg = 'error'
     }
@@ -133,19 +134,19 @@ module.exports = {
     let result = {
       success:false,
       status:'',
-      msg:''
+      msg:'',
+      data:{}
     }
     let session = ctx.session
     console.log(session)
     if (session.isAuth && session.id) {
       let resultData = await userInfoService.updateById(session.id,data)
-      console.log(resultData)
-      if (resultData.avatar == data.avatar) {
         result.success=true
         result.status=200
+        result.data=data
+        result.data.type=ctx.session.type
         ctx.body = result
         return
-      }
     }
     result.success=false,
     result.msg='登录过期'
