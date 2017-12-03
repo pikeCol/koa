@@ -7,6 +7,7 @@ const routers = router
   .post('/user/register', userInfoController.register)
   .post('/user/login', userInfoController.signIn)
   .post('/user/update', userInfoController.update)
+  .get('/user/info', userInfoController.info)
 
 
 module.exports = routers

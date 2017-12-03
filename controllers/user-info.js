@@ -59,12 +59,16 @@ module.exports = {
    */
   async register( ctx ) {
     let formData = ctx.request.body
-    const {password,...data} = formData
+    // const {password,...data} = formData
     console.log(formData)
     let result = {
       success: false,
       msg: '',
-      data: null,
+      data: {
+        avatar:'',
+        type:'',
+        username:''
+      },
       status:''
     }
     formData.password = pwdMd5(formData.password)
@@ -89,12 +93,13 @@ module.exports = {
       result.status = 200
       result.success = true
       ctx.session.id = userResult.insertId
+      ctx.session.username = formData.username
       ctx.session.isAuth = true
     } else {
       result.msg = 'error'
     }
     console.log('我是session',ctx.session)
-    result.data = data
+    result.data = formData
     result.data.avatar = null
     ctx.body = result
     return
@@ -133,16 +138,20 @@ module.exports = {
     let result = {
       success:false,
       status:'',
-      msg:''
+      msg:'',
+      data:''
     }
     let session = ctx.session
     console.log(session)
     if (session.isAuth && session.id) {
       let resultData = await userInfoService.updateById(session.id,data)
-      console.log(resultData)
-      if (resultData.avatar == data.avatar) {
+      let infoData = await userInfoService.getInfoById(session.id)
+      console.log(infoData)
+      if ( resultData && infoData) {
+
         result.success=true
         result.status=200
+        result.data=infoData
         ctx.body = result
         return
       }
@@ -151,6 +160,28 @@ module.exports = {
     result.msg='登录过期'
     result.status=404
     ctx.body = result
+    return
+  },
+  async info(ctx) {
+    let result = {
+      success:false,
+      status:404,
+      msg:'',
+      data:''
+    }
+    let session = ctx.session
+    if (session.isAuth&&session.id) {
+      let resultData = await userInfoService.getUserInfoByUserName(session.username) || {};
+      console.log(resultData)
+      if (resultData) {
+        result.status=200
+        result.success=true
+        result.data = resultData
+        ctx.body=result
+        return
+      }
+    }
+    ctx.body=result
     return
   },
   /**
@@ -177,16 +208,20 @@ module.exports = {
    * @param    {obejct} ctx 上下文对象
    */
   async getUserList ( ctx ) {
+    console.log('query',ctx.query)
+    const {type} = ctx.query
     let result = {
       success: false,
       msg: '',
       data: null,
     }
-    let data = await userInfoService.getAllUser();
+    let data = await userInfoService.getAllUser(type);
     console.log('my data',data)
     result.data = data
     result.success=true
+    result.status=200
     ctx.body = result
+    return
   }
 
 

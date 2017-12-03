@@ -11,7 +11,11 @@ const user = {
      let result = await userModel.create(user)
      return result
    },
-   async getAllUser () {
+   async getAllUser (type) {
+     if (type) {
+       let resultData = userModel.getFilterByType(type)
+       return resultData
+     }
      let resultData = userModel.getAll()
      return resultData
    },
@@ -51,14 +55,15 @@ const user = {
     async getUserInfoByUserName( userName ) {
 
       let resultData = await userModel.getUserInfoByUserName( userName ) || {}
-      let userInfo = {
-        // id: resultData.id,
-        email: resultData.email,
-        userName: resultData.name,
-        detailInfo: resultData.detail_info,
-        createTime: resultData.create_time
-      }
-      return userInfo
+      // console.log()
+      // let userInfo = {
+      //   avatar: resultData.avatar,
+      //   username: resultData.username,
+      //   type: resultData.type,
+      //   title: resultData.title,
+      //   company: resultData.company
+      // }
+      return resultData
     },
 
     async updateById(id,data) {
@@ -66,8 +71,14 @@ const user = {
         avatar:data.avatar,
         company:data.company,
         desc:data.desc,
+        money:data.money,
         title:data.title
       })
+      console.log(resultData)
+      return resultData
+    },
+    async getInfoById(id) {
+      let resultData = await userModel.getInfoById(id)
       console.log(resultData)
       return resultData
     }

@@ -35,9 +35,21 @@ const user = {
   },
   async updateById(id,data) {
     let _sql =`
-      UPDATE user SET avatar="${data.avatar}" WHERE id="${id}";
+      UPDATE user SET avatar="${data.avatar}",company="${data.company}",description="${data.desc}",title="${data.title}",money="${data.money}" WHERE id="${id}";
     `
     let result = await dbUtils.query( _sql )
+    return result
+  },
+  async getInfoById(id) {
+    let _sql =`
+      SELECT * from user WHERE id="${id}";
+    `
+    let result = await dbUtils.query( _sql )
+    if ( Array.isArray(result) && result.length > 0 ) {
+      result = result[0]
+    } else {
+      result = null
+    }
     return result
   },
   /**
@@ -58,7 +70,23 @@ const user = {
     }
     return result
   },
-
+  async getUserInfoByUserName( username ) {
+    let _sql = `
+    SELECT * from user
+      where username="${username}" limit 1`
+    let result = await dbUtils.query( _sql )
+    if ( Array.isArray(result) && result.length > 0 ) {
+      result = result[0]
+    } else {
+      result = null
+    }
+    return result
+  },
+  async getFilterByType (type) {
+    let _sql=`SELECT * from user where type="${type}"`;
+    let result = await dbUtils.query( _sql )
+    return result
+  }
 
 
 
