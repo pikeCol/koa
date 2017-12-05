@@ -25,6 +25,7 @@
     "koa-views": "^5.2.1",
     "path": "^0.12.7",
     "sequelize": "^4.4.4",
+    "socket.io": "^2.0.4",
     "utility": "^1.13.1"
   },
   "devDependencies": {
