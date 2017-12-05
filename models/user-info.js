@@ -35,9 +35,18 @@ const user = {
   },
   async updateById(id,data) {
     let _sql =`
+<<<<<<< HEAD
       UPDATE user SET avatar="${data.avatar}",company="${data.company}",description="${data.desc}",title="${data.title}",money="${data.money}" WHERE id="${id}";
+=======
+      UPDATE user SET avatar="${data.avatar}", description="${data.desc}", company="${data.company}",title="${data.title}"  WHERE id="${id}";
+>>>>>>> b92ccc61958977842cf48ef4b7d89a326c5da842
     `
     let result = await dbUtils.query( _sql )
+    if ( Array.isArray(result) && result.length > 0 ) {
+      result = result[0]
+    } else {
+      result = null
+    }
     return result
   },
   async getInfoById(id) {

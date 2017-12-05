@@ -95,6 +95,7 @@ module.exports = {
       ctx.session.id = userResult.insertId
       ctx.session.username = formData.username
       ctx.session.isAuth = true
+      ctx.session.type = formData.type
     } else {
       result.msg = 'error'
     }
@@ -154,7 +155,6 @@ module.exports = {
         result.data=infoData
         ctx.body = result
         return
-      }
     }
     result.success=false,
     result.msg='登录过期'
