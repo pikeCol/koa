@@ -25,26 +25,26 @@
 //
 // module.exports = config;
 
-// const config = {
-
-//   port: 3001,
-
-//   database: {
-//     DATABASE: 'login',
-//     USERNAME: 'root',
-//     PASSWORD: 'lin520123',
-//     PORT: '3306',
-//     HOST: 'localhost'
-//   }
-// }
 const config = {
+
+  port: 3001,
+
   database: {
-    DATABASE: 'koa_demo',
+    DATABASE: 'login',
     USERNAME: 'root',
-    PASSWORD: 'admin',
+    PASSWORD: 'lin520123',
     PORT: '3306',
     HOST: 'localhost'
   }
 }
+// const config = {
+//   database: {
+//     DATABASE: 'koa_demo',
+//     USERNAME: 'root',
+//     PASSWORD: 'admin',
+//     PORT: '3306',
+//     HOST: 'localhost'
+//   }
+// }
 
 module.exports = config

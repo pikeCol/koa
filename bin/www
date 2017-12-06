@@ -26,16 +26,17 @@ var server = http.createServer(app.callback());
  */
 
 var socket = io.listen(server,{origins: '*:*'});
-socket.on('connection', function(client){ 
+socket.on('connection', function(client){
 
     console.log('client')
-    
+
     //发送自定义事件
     client.emit('news', { hello: 'news world' });
 
     //临听自定义事件
-    client.on('my other event', function (data) {
-        //console.log(data);
+    client.on('sendmsg', function (data) {
+        console.log(data);
+        socket.emit('recvmsg',data)
     });
 });
 
