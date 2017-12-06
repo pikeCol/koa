@@ -1,4 +1,5 @@
 const userInfoService = require('../services/user-info')
+const UUID = require('uuid');
 // const userCode = require('../codes/user')
 const utils = require('utility')
 function pwdMd5(pwd) {
@@ -30,6 +31,13 @@ module.exports = {
     console.log(userResult)
     if ( userResult ) {
       if ( formData.username === userResult.username ) {
+
+        ctx.session.id = userResult.oid
+        ctx.cookies.set('uid',userResult.oid)
+        ctx.session.username = userResult.username
+        ctx.session.isAuth = true
+        ctx.session.type = userResult.type
+
         result.success = true
         result.data.avatar = userResult.avatar
         result.data.type = userResult.type
@@ -80,11 +88,12 @@ module.exports = {
       ctx.body = result
       return
     }
-
+    const ID = UUID.v1()
     let userResult = await userInfoService.create({
       password: formData.password,
       username: formData.username,
       type: formData.type,
+      oid:ID
       // create_time:t
     })
     console.log( userResult )
@@ -92,7 +101,10 @@ module.exports = {
     if ( userResult && userResult.insertId * 1 > 0) {
       result.status = 200
       result.success = true
-      ctx.session.id = userResult.insertId
+      ctx.session.id = ID
+      ctx.cookies.set('uid',ID,{
+        httpOnly:false
+      })
       ctx.session.username = formData.username
       ctx.session.isAuth = true
       ctx.session.type = formData.type
@@ -143,18 +155,18 @@ module.exports = {
       data:''
     }
     let session = ctx.session
-    console.log(session)
-    if (session.isAuth && session.id) {
+    if (session.isAuth && ctx.cookies.get('uid')) {
       let resultData = await userInfoService.updateById(session.id,data)
       let infoData = await userInfoService.getInfoById(session.id)
-      console.log(infoData)
+      console.log('w s resultData',resultData)
+      console.log('w s info',infoData)
       if ( resultData && infoData) {
-
         result.success=true
         result.status=200
         result.data=infoData
         ctx.body = result
         return
+      }
     }
     result.success=false,
     result.msg='登录过期'
@@ -170,9 +182,8 @@ module.exports = {
       data:''
     }
     let session = ctx.session
-    if (session.isAuth&&session.id) {
+    if (session.isAuth&&ctx.cookies.get('uid')) {
       let resultData = await userInfoService.getUserInfoByUserName(session.username) || {};
-      console.log(resultData)
       if (resultData) {
         result.status=200
         result.success=true

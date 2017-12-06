@@ -25,14 +25,23 @@
 //
 // module.exports = config;
 
+// const config = {
+
+//   port: 3001,
+
+//   database: {
+//     DATABASE: 'login',
+//     USERNAME: 'root',
+//     PASSWORD: 'lin520123',
+//     PORT: '3306',
+//     HOST: 'localhost'
+//   }
+// }
 const config = {
-
-  port: 3001,
-
   database: {
-    DATABASE: 'login',
+    DATABASE: 'koa_demo',
     USERNAME: 'root',
-    PASSWORD: 'lin520123',
+    PASSWORD: 'admin',
     PORT: '3306',
     HOST: 'localhost'
   }

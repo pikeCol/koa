@@ -43,6 +43,7 @@ const user = {
         'password': formData.password,
         'username': formData.username
       })
+      
       return resultData
     },
 
@@ -55,14 +56,6 @@ const user = {
     async getUserInfoByUserName( userName ) {
 
       let resultData = await userModel.getUserInfoByUserName( userName ) || {}
-      // console.log()
-      // let userInfo = {
-      //   avatar: resultData.avatar,
-      //   username: resultData.username,
-      //   type: resultData.type,
-      //   title: resultData.title,
-      //   company: resultData.company
-      // }
       return resultData
     },
 
@@ -74,12 +67,10 @@ const user = {
         money:data.money,
         title:data.title
       })
-      console.log(resultData)
       return resultData
     },
     async getInfoById(id) {
       let resultData = await userModel.getInfoById(id)
-      console.log(resultData)
       return resultData
     }
 }
